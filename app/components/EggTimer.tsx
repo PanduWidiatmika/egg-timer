@@ -79,7 +79,7 @@ const EggTimer = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center p-6 bg-pink-100 rounded-lg shadow-lg font-pixel pixelated-border pixelated-bg">
+    <div className="flex flex-col items-center justify-center p-4 sm:p-6 bg-pink-100 rounded-lg shadow-lg font-pixel pixelated-border pixelated-bg">
       {showConfetti && <Confetti width={window.innerWidth} height={window.innerHeight} recycle={false} onConfettiComplete={() => setShowConfetti(false)} />}
 
       {showModal && (
@@ -91,12 +91,12 @@ const EggTimer = () => {
           }}
         >
           <div
-            className={`bg-white p-6 rounded-lg shadow-lg text-center flex flex-col items-center justify-center transition-all duration-300 ease-in-out ${modalContentVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
+            className={`bg-white p-4 sm:p-6 rounded-lg shadow-lg text-center flex flex-col items-center justify-center transition-all duration-300 ease-in-out ${modalContentVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
             onClick={(e) => e.stopPropagation()}
           >
-            <h2 className="text-2xl font-bold text-pink-700 mb-4">Your egg is ready!</h2>
+            <h2 className="text-xl sm:text-2xl font-bold text-pink-700 mb-2 sm:mb-4">Your egg is ready!</h2>
 
-            <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg" className="mb-4">
+            <svg width="150" height="150" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="mb-2 sm:mb-4">
               <g transform="translate(20,20)">
                 <rect x="30" y="0" width="100" height="10" fill="#FFF5E6" />
                 <rect x="20" y="10" width="120" height="10" fill="#FFF5E6" />
@@ -124,14 +124,14 @@ const EggTimer = () => {
               </g>
             </svg>
 
-            <p className="text-lg text-pink-600 mb-6">Enjoy your perfectly boiled egg!</p>
+            <p className="text-base sm:text-lg text-pink-600 mb-4 sm:mb-6">Enjoy your perfectly boiled egg!</p>
             <button
               onClick={() => {
                 setModalContentVisible(false);
                 setTimeout(() => setShowModal(false), 300);
                 stopSound();
               }}
-              className="btn btn-primary bg-pink-500 border-pink-500 hover:bg-pink-600 hover:border-pink-600 text-white"
+              className="btn btn-primary bg-pink-500 border-pink-500 hover:bg-pink-600 hover:border-pink-600 text-white text-sm sm:text-base px-3 py-1 sm:px-4 sm:py-2"
             >
               Close
             </button>
@@ -139,12 +139,12 @@ const EggTimer = () => {
         </div>
       )}
 
-      <h1 className="text-3xl font-bold text-pink-700 mb-4">🥚 Egg Timer 🥚</h1>
-      <p className="text-lg text-pink-600 mb-6">Choose your egg type:</p>
-      <div className="flex justify-between gap-4">
-        <div onClick={() => startTimer(10)} className="flex-1 flex items-center justify-center border rounded-xl cursor-pointer px-3 py-2 w-auto bg-pink-500 hover:bg-pink-600 pixelated-border">
+      <h1 className="text-2xl sm:text-3xl font-bold text-pink-700 mb-2 sm:mb-4">🥚 Egg Timer 🥚</h1>
+      <p className="text-base sm:text-lg text-pink-600 mb-4 sm:mb-6">Choose your egg type:</p>
+      <div className="flex flex-col sm:flex-row justify-between gap-4">
+        <div onClick={() => startTimer(10)} className="flex-1 flex items-center justify-center border rounded-xl cursor-pointer px-3 py-2 w-full sm:w-auto bg-pink-500 hover:bg-pink-600 pixelated-border">
           <div className="flex flex-col items-center justify-center">
-            <svg width="120" height="120" xmlns="http://www.w3.org/2000/svg">
+            <svg width="80" height="80" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" className="mb-2">
               <g transform="translate(10,10)">
                 <rect x="20" y="0" width="60" height="10" fill="#F0F0F0" />
                 <rect x="10" y="10" width="80" height="10" fill="#F0F0F0" />
@@ -157,14 +157,14 @@ const EggTimer = () => {
               </g>
             </svg>
 
-            <span className="text-sm text-center text-white">Classic Boiled</span>
-            <span className="text-sm text-center text-white">(10 mins)</span>
+            <span className="text-xs sm:text-sm text-center text-white">Classic Boiled</span>
+            <span className="text-xs sm:text-sm text-center text-white">(10 mins)</span>
           </div>
         </div>
 
-        <div onClick={() => startTimer(12)} className="flex-1 flex items-center justify-center border rounded-xl cursor-pointer px-3 py-2 w-auto  bg-purple-500  hover:bg-purple-600 pixelated-border">
+        <div onClick={() => startTimer(12)} className="flex-1 flex items-center justify-center border rounded-xl cursor-pointer px-3 py-2 w-full sm:w-auto bg-purple-500 hover:bg-purple-600 pixelated-border">
           <div className="flex flex-col items-center justify-center">
-            <svg width="120" height="120" xmlns="http://www.w3.org/2000/svg">
+            <svg width="80" height="80" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" className="mb-2">
               <g transform="translate(10,10)">
                 <rect x="20" y="0" width="60" height="10" fill="#F0F0F0" />
                 <rect x="10" y="10" width="80" height="10" fill="#F0F0F0" />
@@ -176,14 +176,14 @@ const EggTimer = () => {
               </g>
             </svg>
 
-            <span className="text-sm text-center text-white">Hard Boiled</span>
-            <span className="text-sm text-center text-white">(12 mins)</span>
+            <span className="text-xs sm:text-sm text-center text-white">Hard Boiled</span>
+            <span className="text-xs sm:text-sm text-center text-white">(12 mins)</span>
           </div>
         </div>
       </div>
 
-      <div className={`mt-6 overflow-hidden transition-all duration-300 ease-in-out ${timerVisible ? "max-h-20 opacity-100" : "max-h-0 opacity-0"}`}>
-        <p className="text-2xl font-bold text-pink-700">Time left: {formatTime(timeLeft)}</p>
+      <div className={`mt-4 sm:mt-6 overflow-hidden transition-all duration-300 ease-in-out ${timerVisible ? "max-h-20 opacity-100" : "max-h-0 opacity-0"}`}>
+        <p className="text-xl sm:text-2xl font-bold text-pink-700">Time left: {formatTime(timeLeft)}</p>
       </div>
     </div>
   );
