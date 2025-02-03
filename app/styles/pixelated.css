@@ -1,0 +1,9 @@
+.pixelated-border {
+  box-shadow: 0 -4px 0 0 #000, 0 4px 0 0 #000, -4px 0 0 0 #000, 4px 0 0 0 #000, -4px -4px 0 0 #000, 4px -4px 0 0 #000, -4px 4px 0 0 #000, 4px 4px 0 0 #000;
+}
+
+.pixelated-bg {
+  background-image: linear-gradient(45deg, #fce4ec 25%, transparent 25%), linear-gradient(-45deg, #fce4ec 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #fce4ec 75%), linear-gradient(-45deg, transparent 75%, #fce4ec 75%);
+  background-size: 8px 8px;
+  background-position: 0 0, 0 4px, 4px -4px, -4px 0px;
+}

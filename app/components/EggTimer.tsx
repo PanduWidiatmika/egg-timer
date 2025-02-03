@@ -8,27 +8,32 @@ const EggTimer = () => {
   const [timeLeft, setTimeLeft] = useState<number>(0);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [showConfetti, setShowConfetti] = useState<boolean>(false);
+  const [modalContentVisible, setModalContentVisible] = useState<boolean>(false);
+  const [timerVisible, setTimerVisible] = useState<boolean>(false);
 
   const alarmSound = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       alarmSound.current = new Audio("/assets/mp3/victoryfanafare.mp3");
-      alarmSound.current.volume = 0.08;
+      alarmSound.current.volume = 0.05;
     }
   }, []);
 
   const startTimer = (minutes: number) => {
     if (timer) clearInterval(timer);
     setTimeLeft(minutes * 60);
+    setTimerVisible(true);
 
     const newTimer = setInterval(() => {
       setTimeLeft((prev) => {
         if (prev <= 1) {
           clearInterval(newTimer);
+          setTimerVisible(false);
           setShowModal(true);
           setShowConfetti(true);
           alarmSound.current?.play();
+          setTimeout(() => setModalContentVisible(true), 50);
           return 0;
         }
         return prev - 1;
@@ -54,6 +59,18 @@ const EggTimer = () => {
     };
   }, [timer]);
 
+  useEffect(() => {
+    if (!showModal) {
+      setModalContentVisible(false);
+    }
+  }, [showModal]);
+
+  useEffect(() => {
+    if (timeLeft === 0) {
+      setTimerVisible(false);
+    }
+  }, [timeLeft]);
+
   const stopSound = () => {
     if (alarmSound.current) {
       alarmSound.current.pause();
@@ -62,13 +79,22 @@ const EggTimer = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center p-6 bg-pink-100 rounded-lg shadow-lg">
+    <div className="flex flex-col items-center justify-center p-6 bg-pink-100 rounded-lg shadow-lg font-pixel pixelated-border pixelated-bg">
       {showConfetti && <Confetti width={window.innerWidth} height={window.innerHeight} recycle={false} onConfettiComplete={() => setShowConfetti(false)} />}
 
       {showModal && (
-        <div className={`fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-500 ease-out ${showModal ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
-          <div className="bg-white p-6 rounded-lg shadow-lg text-center flex flex-col items-center justify-center">
-            <h2 className="text-2xl font-bold font-mono text-pink-700 mb-4">Your egg is ready! 🥚</h2>
+        <div
+          className={`fixed inset-0 flex items-center justify-center bg-black transition-opacity duration-300 ease-in-out pixelated-border pixelated-bg ${showModal ? "bg-opacity-50" : "bg-opacity-0"}`}
+          onClick={() => {
+            setShowModal(false);
+            stopSound();
+          }}
+        >
+          <div
+            className={`bg-white p-6 rounded-lg shadow-lg text-center flex flex-col items-center justify-center transition-all duration-300 ease-in-out ${modalContentVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2 className="text-2xl font-bold text-pink-700 mb-4">Your egg is ready!</h2>
 
             <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg" className="mb-4">
               <g transform="translate(20,20)">
@@ -98,13 +124,14 @@ const EggTimer = () => {
               </g>
             </svg>
 
-            <p className="text-lg font-mono text-pink-600 mb-6">Enjoy your perfectly boiled egg!</p>
+            <p className="text-lg text-pink-600 mb-6">Enjoy your perfectly boiled egg!</p>
             <button
               onClick={() => {
-                setShowModal(false);
+                setModalContentVisible(false);
+                setTimeout(() => setShowModal(false), 300);
                 stopSound();
               }}
-              className="btn btn-primary bg-pink-500 hover:bg-pink-600 text-white"
+              className="btn btn-primary bg-pink-500 border-pink-500 hover:bg-pink-600 hover:border-pink-600 text-white"
             >
               Close
             </button>
@@ -112,10 +139,10 @@ const EggTimer = () => {
         </div>
       )}
 
-      <h1 className="text-3xl font-bold text-pink-700 mb-4 font-mono">🥚 Egg Timer 🥚</h1>
-      <p className="text-lg text-pink-600 mb-6 font-mono">Choose your egg type:</p>
+      <h1 className="text-3xl font-bold text-pink-700 mb-4">🥚 Egg Timer 🥚</h1>
+      <p className="text-lg text-pink-600 mb-6">Choose your egg type:</p>
       <div className="flex justify-between gap-4">
-        <div onClick={() => startTimer(0.1)} className="flex-1 flex items-center justify-center border rounded-xl cursor-pointer px-3 py-2 w-auto bg-pink-500 border-pink-500 hover:bg-pink-600 hover:border-pink-600">
+        <div onClick={() => startTimer(0.1)} className="flex-1 flex items-center justify-center border rounded-xl cursor-pointer px-3 py-2 w-auto bg-pink-500 hover:bg-pink-600 pixelated-border">
           <div className="flex flex-col items-center justify-center">
             <svg width="120" height="120" xmlns="http://www.w3.org/2000/svg">
               <g transform="translate(10,10)">
@@ -130,12 +157,12 @@ const EggTimer = () => {
               </g>
             </svg>
 
-            <span className="text-sm font-mono text-center text-white">Classic Boiled</span>
-            <span className="text-sm font-mono text-center text-white">(10 mins)</span>
+            <span className="text-sm text-center text-white">Classic Boiled</span>
+            <span className="text-sm text-center text-white">(10 mins)</span>
           </div>
         </div>
 
-        <div onClick={() => startTimer(12)} className="flex-1 flex items-center justify-center border rounded-xl cursor-pointer px-3 py-2 w-auto  bg-purple-500 border-purple-500 hover:bg-purple-600 hover:border-purple-600">
+        <div onClick={() => startTimer(12)} className="flex-1 flex items-center justify-center border rounded-xl cursor-pointer px-3 py-2 w-auto  bg-purple-500  hover:bg-purple-600 pixelated-border">
           <div className="flex flex-col items-center justify-center">
             <svg width="120" height="120" xmlns="http://www.w3.org/2000/svg">
               <g transform="translate(10,10)">
@@ -149,13 +176,15 @@ const EggTimer = () => {
               </g>
             </svg>
 
-            <span className="text-sm font-mono text-center text-white">Hard Boiled</span>
-            <span className="text-sm font-mono text-center text-white">(12 mins)</span>
+            <span className="text-sm text-center text-white">Hard Boiled</span>
+            <span className="text-sm text-center text-white">(12 mins)</span>
           </div>
         </div>
       </div>
 
-      {timeLeft > 0 && <p className="mt-6 text-2xl font-bold font-mono text-pink-700">Time left: {formatTime(timeLeft)}</p>}
+      <div className={`mt-6 overflow-hidden transition-all duration-300 ease-in-out ${timerVisible ? "max-h-20 opacity-100" : "max-h-0 opacity-0"}`}>
+        <p className="text-2xl font-bold text-pink-700">Time left: {formatTime(timeLeft)}</p>
+      </div>
     </div>
   );
 };
