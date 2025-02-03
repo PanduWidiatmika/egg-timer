@@ -142,7 +142,7 @@ const EggTimer = () => {
       <h1 className="text-3xl font-bold text-pink-700 mb-4">🥚 Egg Timer 🥚</h1>
       <p className="text-lg text-pink-600 mb-6">Choose your egg type:</p>
       <div className="flex justify-between gap-4">
-        <div onClick={() => startTimer(0.1)} className="flex-1 flex items-center justify-center border rounded-xl cursor-pointer px-3 py-2 w-auto bg-pink-500 hover:bg-pink-600 pixelated-border">
+        <div onClick={() => startTimer(10)} className="flex-1 flex items-center justify-center border rounded-xl cursor-pointer px-3 py-2 w-auto bg-pink-500 hover:bg-pink-600 pixelated-border">
           <div className="flex flex-col items-center justify-center">
             <svg width="120" height="120" xmlns="http://www.w3.org/2000/svg">
               <g transform="translate(10,10)">
